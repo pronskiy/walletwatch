@@ -1,0 +1,1 @@
+hey can we add monthly budget tracking? users should set a budget per category and see how much is left. maybe a progress bar or something on the dashboard? would be nice to see which categories are over budget too 🔴
