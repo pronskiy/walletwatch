@@ -1,0 +1,62 @@
+<?php
+
+namespace App\Observers;
+
+use App\Models\Transaction;
+use App\Services\DashboardService;
+
+class TransactionObserver
+{
+    private DashboardService $dashboardService;
+
+    public function __construct(DashboardService $dashboardService)
+    {
+        $this->dashboardService = $dashboardService;
+    }
+
+    /**
+     * Handle the Transaction "created" event.
+     */
+    public function created(Transaction $transaction): void
+    {
+        $this->dashboardService->invalidateUserCache($transaction->user_id);
+    }
+
+    /**
+     * Handle the Transaction "updated" event.
+     */
+    public function updated(Transaction $transaction): void
+    {
+        $this->dashboardService->invalidateUserCache($transaction->user_id);
+        
+        // If user_id changed, also invalidate the previous user's cache
+        if ($transaction->isDirty('user_id')) {
+            $originalUserId = $transaction->getOriginal('user_id');
+            $this->dashboardService->invalidateUserCache($originalUserId);
+        }
+    }
+
+    /**
+     * Handle the Transaction "deleted" event.
+     */
+    public function deleted(Transaction $transaction): void
+    {
+        $this->dashboardService->invalidateUserCache($transaction->user_id);
+    }
+
+    /**
+     * Handle the Transaction "restored" event.
+     */
+    public function restored(Transaction $transaction): void
+    {
+        $this->dashboardService->invalidateUserCache($transaction->user_id);
+    }
+
+    /**
+     * Handle the Transaction "force deleted" event.
+     */
+    public function forceDeleted(Transaction $transaction): void
+    {
+        $this->dashboardService->invalidateUserCache($transaction->user_id);
+    }
+}
