@@ -41,6 +41,16 @@ class Account extends Model
 
     public function getBalanceAttribute(): float
     {
-        return $this->initial_balance + $this->transactions->sum('amount');
+        // Use database aggregation instead of loading all transactions
+        $transactionSum = $this->transactions()->sum('amount') ?? 0;
+        return $this->initial_balance + $transactionSum;
+    }
+
+    /**
+     * Get balance using efficient database query
+     */
+    public function getBalanceEfficient(): float
+    {
+        return $this->initial_balance + Transaction::forAccount($this->id)->sumAmount();
     }
 }
