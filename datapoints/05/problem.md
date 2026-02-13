@@ -1,0 +1,1 @@
+Add transaction search. Filter by date range, category, amount min/max, account. Make it fast.
