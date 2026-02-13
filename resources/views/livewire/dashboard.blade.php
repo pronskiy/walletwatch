@@ -14,6 +14,11 @@
             </div>
         </div>
 
+        <!-- Budget Tracking -->
+        <div class="mb-8">
+            @livewire('budget-tracker')
+        </div>
+
         <!-- Accounts Summary -->
         <div class="mb-8">
             <h2 class="text-2xl font-bold text-gray-900 mb-4">Your Accounts</h2>
