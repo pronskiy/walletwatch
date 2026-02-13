@@ -6,11 +6,36 @@
             <p class="text-gray-600">Welcome back! Here's your financial overview.</p>
         </div>
 
-        <!-- Total Balance Card -->
-        <div class="mb-8">
+        <!-- Total Balance and Monthly Summary -->
+        <div class="mb-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Total Balance Card -->
             <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg shadow-lg p-6 text-white">
                 <h2 class="text-lg font-medium mb-2">Total Balance</h2>
                 <p class="text-3xl font-bold">${{ number_format($totalBalance, 2) }}</p>
+            </div>
+
+            <!-- Monthly Summary Card -->
+            <div class="bg-gradient-to-r from-green-500 to-teal-600 rounded-lg shadow-lg p-6 text-white">
+                <h2 class="text-lg font-medium mb-2">This Month</h2>
+                <div class="space-y-2">
+                    <div class="flex justify-between">
+                        <span>Income:</span>
+                        <span class="font-bold">${{ number_format($monthlySummary['total_income'] ?? 0, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Expenses:</span>
+                        <span class="font-bold">${{ number_format($monthlySummary['total_expenses'] ?? 0, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between border-t border-white border-opacity-30 pt-2">
+                        <span>Net:</span>
+                        <span class="font-bold text-xl">
+                            ${{ number_format($monthlySummary['net_amount'] ?? 0, 2) }}
+                        </span>
+                    </div>
+                    <div class="text-sm opacity-90">
+                        {{ $monthlySummary['transaction_count'] ?? 0 }} transactions
+                    </div>
+                </div>
             </div>
         </div>
 
