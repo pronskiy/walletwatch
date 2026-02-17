@@ -1,0 +1,1 @@
+Need CSV import for bank statements. Upload → map columns → preview → confirm. Support at least Chase and Bank of America formats. Don't overthink the UI.
