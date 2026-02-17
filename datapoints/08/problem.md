@@ -1,0 +1,1 @@
+we need account reconciliation. users enter their real bank balance, system shows discrepancy, they can create adjustment entries. ship it.
