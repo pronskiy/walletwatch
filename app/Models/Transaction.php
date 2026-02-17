@@ -47,4 +47,54 @@ class Transaction extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    // Query scopes for filtering
+    public function scopeSearch($query, $search)
+    {
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('description', 'like', '%' . $search . '%')
+                  ->orWhere('notes', 'like', '%' . $search . '%');
+            });
+        }
+        return $query;
+    }
+
+    public function scopeDateRange($query, $startDate, $endDate)
+    {
+        if ($startDate) {
+            $query->where('date', '>=', $startDate);
+        }
+        if ($endDate) {
+            $query->where('date', '<=', $endDate);
+        }
+        return $query;
+    }
+
+    public function scopeByCategory($query, $categoryId)
+    {
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
+        return $query;
+    }
+
+    public function scopeByAccount($query, $accountId)
+    {
+        if ($accountId) {
+            $query->where('account_id', $accountId);
+        }
+        return $query;
+    }
+
+    public function scopeAmountRange($query, $minAmount, $maxAmount)
+    {
+        if ($minAmount !== null) {
+            $query->where('amount', '>=', $minAmount);
+        }
+        if ($maxAmount !== null) {
+            $query->where('amount', '<=', $maxAmount);
+        }
+        return $query;
+    }
 }
